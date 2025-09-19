@@ -11,27 +11,33 @@ namespace Restaurantes
     {
         Restaurantes a = new Restaurantes();
         Restaurantes[] ArreglosRestaurantes;
+        public Restaurantes[] Add
+        {
+            get { return ArreglosRestaurantes; }
+            set { ArreglosRestaurantes = value; }
+        }
         public void Exportar()
         {
             if (ArreglosRestaurantes == null || ArreglosRestaurantes.Length == 0)
             {
-                Console.WriteLine("No hay computadoras para exportar.");
+                Console.WriteLine("No hay restaurantes para exportar.");
                 return;
             }
 
-            string ruta = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + @"\computadoras.xlsx";
+            string ruta = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + @"\restaurantes.xlsx";
 
             using (var wb = new XLWorkbook())
             {
-                var ws = wb.AddWorksheet("Computadoras");
+                // Crear la hoja de cálculo usando el método AddWorksheet
+                var ws = wb.Worksheets.Add("Restaurantes");
 
                 // Encabezados
                 ws.Cell(1, 1).Value = "ID";
                 ws.Cell(1, 2).Value = "Nombre";
-                ws.Cell(1, 3).Value = "Marca";
-                ws.Cell(1, 4).Value = "Almacenamiento (GB)";
-                ws.Cell(1, 5).Value = "Memoria RAM";
-                ws.Cell(1, 6).Value = "Sistema";
+                ws.Cell(1, 3).Value = "Dirección";
+                ws.Cell(1, 4).Value = "Tipo de Comida";
+                ws.Cell(1, 5).Value = "Calificación";
+                ws.Cell(1, 6).Value = "Precio Promedio";
 
                 // Datos
                 for (int i = 0; i < ArreglosRestaurantes.Length; i++)
@@ -48,8 +54,6 @@ namespace Restaurantes
                 // Estilos
                 ws.Row(1).Style.Font.Bold = true;
                 ws.Row(1).Style.Fill.BackgroundColor = XLColor.LightGray;
-                ws.Column(4).Style.NumberFormat.Format = "0 GB";  // Almacenamiento
-                ws.Column(6).Style.NumberFormat.Format = "0";    // Sistema
                 ws.Columns().AdjustToContents();
                 ws.RangeUsed().SetAutoFilter();
 
@@ -59,7 +63,5 @@ namespace Restaurantes
 
             Console.WriteLine($"Archivo exportado correctamente en: {ruta}");
         }
-
-
     }
 }

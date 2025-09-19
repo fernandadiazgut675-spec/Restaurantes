@@ -13,8 +13,9 @@ namespace Restaurantes
         {
 
 
-                Acciones acciones = new Acciones();
-                while (true)
+            Acciones acciones = new Acciones();
+            ExportarExcel exportar = new ExportarExcel();
+            while (true)
                 {
                     switch (Menu())
                     {
@@ -33,9 +34,8 @@ namespace Restaurantes
                             acciones.Eliminar();
                             break;
                         case 5:
-                          
+                            exportar.Exportar(); 
                         break;
-
                         default:
                             break;
                     }

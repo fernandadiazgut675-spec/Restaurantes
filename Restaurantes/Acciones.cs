@@ -6,103 +6,103 @@ using System.Threading.Tasks;
 
 namespace Restaurantes
 {
+    using System;
+    using System.Collections.Generic;
+
     internal class Acciones
     {
-        Restaurantes a = new Restaurantes();
-        Restaurantes[] ArreglosRestaurantes;
+        List<Restaurantes> listaRestaurantes = new List<Restaurantes>();
 
         public void AgregarRestaurantes()
         {
-            Console.WriteLine("¿CUÁNTAS COMPUTADORAS DESEAS INGRESAR?");
+            Console.WriteLine("¿CUÁNTOS restaurantes deseas ingresar?");
             int num = Convert.ToInt32(Console.ReadLine());
-            ArreglosRestaurantes = new Restaurantes[num];
 
-            for (int i = 0; i < ArreglosRestaurantes.Length; i++)
+            for (int i = 0; i < num; i++)
             {
+                Restaurantes a = new Restaurantes();
+
                 Console.WriteLine("Ingresa el nombre:");
                 a.Nombre = Console.ReadLine();
-                Console.WriteLine("Ingresa la Direccion:");
+
+                Console.WriteLine("Ingresa la dirección:");
                 a.Direccion = Console.ReadLine();
-                Console.WriteLine("Ingresa el tipo de comida :");
+
+                Console.WriteLine("Ingresa el tipo de comida:");
                 a.TipoComida = Console.ReadLine();
-                Console.WriteLine("Ingresa la calidicacion:");
+
+                Console.WriteLine("Ingresa la calificación:");
                 a.Calificacion = Convert.ToInt32(Console.ReadLine());
-                Console.WriteLine("Ingresa el precio promedio :");
+
+                Console.WriteLine("Ingresa el precio promedio:");
                 a.PrecioPromedio = Convert.ToInt32(Console.ReadLine());
 
-                ArreglosRestaurantes[i] = new Restaurantes(a.Nombre, a.TipoComida , a.Direccion, a.Calificacion, a.PrecioPromedio);
+                listaRestaurantes.Add(a); // Se agrega directamente a la lista
             }
         }
+
         public void Mostrar()
         {
             int index = 0;
-            foreach (var i in ArreglosRestaurantes)
+            foreach (var i in listaRestaurantes)
             {
                 Console.WriteLine("_____________________________________");
                 Console.WriteLine($"ID: {index}");
                 Console.WriteLine($"Nombre: {i.Nombre}");
-                Console.WriteLine($"dieccion: {i.Direccion}");
-                Console.WriteLine($"calificacion: {i.Calificacion}");
+                Console.WriteLine($"Dirección: {i.Direccion}");
+                Console.WriteLine($"Calificación: {i.Calificacion}");
                 Console.WriteLine($"Tipo de comida: {i.TipoComida}");
-                Console.WriteLine($"precio promedio : {i.PrecioPromedio}");
+                Console.WriteLine($"Precio promedio: {i.PrecioPromedio}");
                 Console.WriteLine("_____________________________________");
-
+                index++;
             }
         }
+
         public void Modificar()
         {
-            Console.WriteLine("Ingresa el ID de la computadora a modificar:");
+            Console.WriteLine("Ingresa el ID del restaurante a modificar:");
             int id = Convert.ToInt32(Console.ReadLine());
 
-            if (id >= 0 && id < ArreglosRestaurantes.Length)
+            if (id >= 0 && id < listaRestaurantes.Count)
             {
                 Console.WriteLine("Ingresa el nuevo nombre:");
-                ArreglosRestaurantes[id].Nombre = Console.ReadLine();
-                Console.WriteLine("Ingresa la nueva Direccion :");
-                ArreglosRestaurantes[id].Calificacion = Convert.ToInt32(Console.ReadLine());
-                Console.WriteLine("Ingresa el t`po de comida:");
-                ArreglosRestaurantes[id].TipoComida = Console.ReadLine();
-                Console.WriteLine("Ingresa la calificacion :");
-                ArreglosRestaurantes[id].TipoComida = Console.ReadLine();
-                Console.WriteLine("Ingresa el nuevo sistema:");
-                ArreglosRestaurantes[id].PrecioPromedio = Convert.ToInt32(Console.ReadLine());
+                listaRestaurantes[id].Nombre = Console.ReadLine();
 
-                Console.WriteLine(" Se modifica con exito");
+                Console.WriteLine("Ingresa la nueva dirección:");
+                listaRestaurantes[id].Direccion = Console.ReadLine();
+
+                Console.WriteLine("Ingresa el tipo de comida:");
+                listaRestaurantes[id].TipoComida = Console.ReadLine();
+
+                Console.WriteLine("Ingresa la nueva calificación:");
+                listaRestaurantes[id].Calificacion = Convert.ToInt32(Console.ReadLine());
+
+                Console.WriteLine("Ingresa el nuevo precio promedio:");
+                listaRestaurantes[id].PrecioPromedio = Convert.ToInt32(Console.ReadLine());
+
+                Console.WriteLine("Restaurante modificado con éxito.");
             }
             else
             {
-                Console.WriteLine(" ID no válido.");
+                Console.WriteLine("ID no válido.");
             }
         }
+
         public void Eliminar()
         {
             Console.WriteLine("Ingresa el ID para eliminar:");
             int id = Convert.ToInt32(Console.ReadLine());
 
-            if (id >= 0 && id < ArreglosRestaurantes.Length)
+            if (id >= 0 && id < listaRestaurantes.Count)
             {
-
-                Restaurantes[] nuevoArreglo = new Restaurantes[ArreglosRestaurantes.Length - 1];
-                int j = 0;
-
-                for (int i = 0; i < ArreglosRestaurantes.Length; i++)
-                {
-                    if (i != id)
-                    {
-                        nuevoArreglo[j] = ArreglosRestaurantes[i];
-                        j++;
-                    }
-                }
-
-                ArreglosRestaurantes = nuevoArreglo;
-                Console.WriteLine(" Restaurante  eliminado con éxito.");
+                listaRestaurantes.RemoveAt(id); // Elimina directo por índice
+                Console.WriteLine("Restaurante eliminado con éxito.");
             }
             else
             {
-                Console.WriteLine(" ID no válido.");
+                Console.WriteLine("ID no válido.");
             }
         }
-        
-
     }
+
 }
